@@ -8,8 +8,8 @@ But of course you can try it out. Challenge accepted ;)
 
 #### Version
 
-This is the Java version of the game.
-You can find the twin repo written in C++ here on my github or directly https://github.com/SauronTs/TicTacToe
+This is the C++ version of the game.
+You can find the twin repo written in Java here on my github or directly https://github.com/SauronTs/TicTacToe-Java
 
 #### Things used
 No graphics libraries. Only simple text output.
