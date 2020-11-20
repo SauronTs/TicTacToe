@@ -10,7 +10,9 @@ int main(int argc, char *argv[]) {
 
     TicTacToe game;
 
-    game.nextAIMove();
+    if(rand() % 2 == 0)
+        game.nextAIMove();
+
     game.printField();
     
     char input = ' ';
