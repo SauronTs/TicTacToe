@@ -1,5 +1,14 @@
 #include "TicTacToe.h"
 
+#include <memory>
+#include <vector>
+
+struct Position {
+    int x;
+    int y;
+    Position(int x, int y) : x(x), y(y) {}
+};
+
 TicTacToe::TicTacToe() {
     for(int i = 0; i < 3; ++i) {
         for(int a = 0; a < 3; ++a) {
@@ -85,8 +94,9 @@ bool TicTacToe::nextPlayerMove(int number) {
 }
 
 void TicTacToe::nextAIMove() {
-    int bestScore = std::numeric_limits<int>::min();
-    int bestX = 0, bestY = 0;
+    int bestScore = -1;
+    std::map<std::unique_ptr<Position>, int> moves;
+    std::vector<Position*> bestMoves;
 
     for(int i = 0; i  < 3; ++i) {
         for(int a = 0; a < 3; ++a) {
@@ -94,16 +104,21 @@ void TicTacToe::nextAIMove() {
                 setPosition(i, a, false);
                 int score = minimax(0, false);
                 deletePosition(i, a);
-                if(score > bestScore) {
+                moves.insert(std::make_pair(new Position(i, a), score));
+                if(score > bestScore)
                     bestScore = score;
-                    bestX = i;
-                    bestY = a;
-                }
             }
         }
+    }   
+
+    for(auto & [key, value] : moves) {
+        if(value == bestScore)
+            bestMoves.push_back(key.get());
     }
 
-    setPosition(bestX, bestY, false);
+    Position *random = bestMoves[rand() % bestMoves.size()];
+
+    setPosition(random->x, random->y, false);
 
     if(hasWon() == 1)
         m_gameIsRunning = false;
