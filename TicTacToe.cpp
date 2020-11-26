@@ -45,7 +45,7 @@ int TicTacToe::hasWon() {
             return m_scores[m_field[1][1]];
 
     if(isFull())
-        return 0;
+        return 2;
 
     return -2;
 }
@@ -63,7 +63,7 @@ void TicTacToe::getInput(char input) {
         nextAIMove();
     }
 
-    if(hasWon() == 0)
+    if(hasWon() == 2)
         m_gameIsRunning = false;
 }
 
@@ -73,13 +73,6 @@ bool TicTacToe::nextPlayerMove(int number) {
 
     if(!isPositionBlocked(x, y)) {
         setPosition(x, y, true);
-
-        if(hasWon() == -1) {
-            m_gameIsRunning = false;
-            return false;
-        }
-
-        return true;
     }else {
         std::cerr << "Illegal player move" << std::endl;
         return false;
@@ -94,7 +87,7 @@ bool TicTacToe::nextPlayerMove(int number) {
 }
 
 void TicTacToe::nextAIMove() {
-    int bestScore = -1;
+    int bestScore = 1;
     std::map<std::unique_ptr<Position>, int> moves;
     std::vector<Position*> bestMoves;
 
@@ -120,7 +113,7 @@ void TicTacToe::nextAIMove() {
 
     setPosition(random->x, random->y, false);
 
-    if(hasWon() == 1)
+    if(hasWon() != -2)
         m_gameIsRunning = false;
 }
 
@@ -179,9 +172,9 @@ void TicTacToe::printField() {
     if(m_gameIsRunning) {
         std::cout << std::endl << "Input: ";
     }else {
-        if(hasWon() == -1) {
+        if(hasWon() == 1) {
             std::cout << std::endl << "Player has won";
-        }else if(hasWon() == 1) {
+        }else if(hasWon() == 3) {
             std::cout << std::endl << "AI has won";
         }else {
             std::cout << std::endl << "No one has won";

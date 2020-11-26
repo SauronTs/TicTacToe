@@ -30,7 +30,7 @@ private:
     void deletePosition(int x, int y);
     int minimax(int depth, bool isMax);
 
-    std::map<char, int> m_scores = {{'X', -1}, {'O', 1}};
+    std::map<char, int> m_scores = {{'X', 1}, {'O', 3}};
 
     const static char EMPTY = '#';
     const static char PLAYER = 'X';
