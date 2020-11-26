@@ -10,11 +10,17 @@ struct Position {
 };
 
 TicTacToe::TicTacToe() {
-    for(int i = 0; i < 3; ++i) {
-        for(int a = 0; a < 3; ++a) {
+    resetField();
+}
+
+void TicTacToe::resetField() {
+    for(int i = 0; i < 3; ++i)
+        for(int a = 0; a < 3; ++a)
             m_field[i][a] = EMPTY;
-        }
-    }
+}
+
+void TicTacToe::setGameStatus(bool status) {
+    m_gameIsRunning = status;
 }
 
 void TicTacToe::deletePosition(int x, int y) {
@@ -54,52 +60,36 @@ bool TicTacToe::isNumber(char input) const {
     return input >= '1' && input <= '9';
 }
 
-void TicTacToe::getInput(char input) {
-    if(!isNumber(input)) {
-       return;
-    }
-
-    if(nextPlayerMove(input - '0')) {
-        nextAIMove();
-    }
+void TicTacToe::performMoves() {
+    if(nextAIMove(true))
+        nextAIMove(false);
 
     if(hasWon() == 2)
         m_gameIsRunning = false;
 }
 
-bool TicTacToe::nextPlayerMove(int number) {
-    int x = (number - 1) / 3;
-    int y = (number - 1) - (number - 1) / 3 * 3;
-
-    if(!isPositionBlocked(x, y)) {
-        setPosition(x, y, true);
-    }else {
-        std::cerr << "Illegal player move" << std::endl;
-        return false;
-    }
-
-    if(hasWon() != -2) {
-        m_gameIsRunning = false;
-        return false;
-    }
-
-    return true;
-}
-
-void TicTacToe::nextAIMove() {
+bool TicTacToe::nextAIMove(bool firstAi) {
     int bestScore = 1;
     std::map<std::unique_ptr<Position>, int> moves;
     std::vector<Position*> bestMoves;
 
+    if(firstAi)
+        bestScore = 3;
+
     for(int i = 0; i  < 3; ++i) {
         for(int a = 0; a < 3; ++a) {
             if(!isPositionBlocked(i, a)) {
-                setPosition(i, a, false);
-                int score = minimax(0, false);
+                setPosition(i, a, firstAi);
+                int score = minimax(0, firstAi);
                 deletePosition(i, a);
                 moves.insert(std::make_pair(new Position(i, a), score));
-                if(score > bestScore)
-                    bestScore = score;
+                if(firstAi) {
+                    if(score < bestScore)
+                        bestScore = score;
+                }else {
+                    if(score > bestScore)
+                        bestScore = score;
+                }
             }
         }
     }   
@@ -111,10 +101,14 @@ void TicTacToe::nextAIMove() {
 
     Position *random = bestMoves[rand() % bestMoves.size()];
 
-    setPosition(random->x, random->y, false);
+    setPosition(random->x, random->y, firstAi);
 
-    if(hasWon() != -2)
+    if(hasWon() != -2) {
         m_gameIsRunning = false;
+        return false;
+    }
+
+    return true;
 }
 
 int TicTacToe::minimax(int depth, bool isMax) {

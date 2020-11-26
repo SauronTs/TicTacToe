@@ -12,20 +12,21 @@ public:
     TicTacToe();
 
     void printField();
-    void setPosition(int x, int y, bool isPlayer);
-    void getInput(char input);
-    void nextAIMove();
+    void performMoves();
+    bool nextAIMove(bool firstAi);
+    int hasWon();
+    void resetField();
 
     bool isGameRunning() const {return m_gameIsRunning;}
+    void setGameStatus(bool status);
 
 private:
     std::array<std::array<char, 3>, 3> m_field;
     bool m_gameIsRunning = true;
 
+    void setPosition(int x, int y, bool isPlayer);
     bool isPositionBlocked(int x, int y) const;
-    bool nextPlayerMove(int number);
     bool isNumber(char input) const;
-    int hasWon();
     bool isFull() const;
     void deletePosition(int x, int y);
     int minimax(int depth, bool isMax);

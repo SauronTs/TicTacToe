@@ -10,21 +10,38 @@ int main(int argc, char *argv[]) {
 
     TicTacToe game;
 
+    int playerWon = 0, aiWon = 0, noWon = 0;
+    int counter = 0;
+    int end = 10;
+
     if(rand() % 2 == 0)
-        game.nextAIMove();
-
-    game.printField();
+        game.nextAIMove(false);
     
-    char input = ' ';
+    while(counter < end) {
 
-    while(input != 'q' && game.isGameRunning()) {
-        std::cin >> input;
+        game.performMoves();
 
-        game.getInput(input);
-        game.printField();
+        int won = game.hasWon();
+        if(won != -2) {
+            switch(won) {
+                case 1:
+                    ++playerWon;
+                    break;
+                case 2:
+                    ++noWon;
+                    break;
+                case 3:
+                    ++aiWon;
+                    break;
+            }
+
+            game.resetField();
+            game.setGameStatus(true);
+            ++counter;
+        }
     }
 
-    std::cout << std::endl;
+    std::cout << "Player: " << playerWon << "\nAI: " << aiWon << "\nNo: " << noWon << std::endl;
 
     return 0;
 }
