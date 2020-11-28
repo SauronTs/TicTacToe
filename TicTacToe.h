@@ -16,6 +16,7 @@ public:
     bool nextAIMove(bool firstAi);
     int hasWon();
     void resetField();
+    static bool isNumber(char input);
 
     bool isGameRunning() const {return m_gameIsRunning;}
     void setGameStatus(bool status);
@@ -26,7 +27,6 @@ private:
 
     void setPosition(int x, int y, bool isPlayer);
     bool isPositionBlocked(int x, int y) const;
-    bool isNumber(char input) const;
     bool isFull() const;
     void deletePosition(int x, int y);
     int minimax(int depth, bool isMax);

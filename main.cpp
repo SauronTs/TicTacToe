@@ -14,6 +14,18 @@ int main(int argc, char *argv[]) {
     int counter = 0;
     int end = 10;
 
+    if(argc == 2) {
+        if(TicTacToe::isNumber(*argv[1])) {
+            end = std::atoi(argv[1]);
+        }else {
+            std::cerr << "Argument can only be a number!" << std::endl;
+            return -1;
+        }
+    }else {
+        std::cerr << "usage: [arg1]" << std::endl << "arg1 (optional): Number of games. Default: " << end << "." << std::endl;
+        return -1;
+    }
+
     if(rand() % 2 == 0)
         game.nextAIMove(false);
     

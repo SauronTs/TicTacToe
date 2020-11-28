@@ -56,7 +56,7 @@ int TicTacToe::hasWon() {
     return -2;
 }
 
-bool TicTacToe::isNumber(char input) const {
+bool TicTacToe::isNumber(char input) {
     return input >= '1' && input <= '9';
 }
 
