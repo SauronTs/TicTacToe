@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
     int playerWon = 0, aiWon = 0, noWon = 0;
     int counter = 0;
-    int end = 10;
+    int end = 0;
 
     if(argc == 2) {
         if(TicTacToe::strIsNumber(argv[1])) {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
             return -1;
         }
     }else {
-        std::cerr << "usage: [arg1]" << std::endl << "arg1 (optional): Number of games. Default: " << end << "." << std::endl;
+        std::cerr << "usage: [arg1]" << std::endl << "arg1 (required): Number of games." << std::endl;
         return -1;
     }
 
