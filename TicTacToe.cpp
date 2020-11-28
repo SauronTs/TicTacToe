@@ -60,6 +60,15 @@ bool TicTacToe::isNumber(char input) {
     return input >= '1' && input <= '9';
 }
 
+bool TicTacToe::strIsNumber(const std::string &str) {
+    for(auto it = str.begin(); it != str.end(); ++it) {
+        if(!isNumber(*it))
+            return false;
+    }
+
+    return true;
+}
+
 void TicTacToe::performMoves() {
     if(nextAIMove(true))
         nextAIMove(false);

@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
     int end = 10;
 
     if(argc == 2) {
-        if(TicTacToe::isNumber(*argv[1])) {
-            end = std::atoi(argv[1]);
+        if(TicTacToe::strIsNumber(argv[1])) {
+            end = std::stoi(argv[1]);
         }else {
             std::cerr << "Argument can only be a number!" << std::endl;
             return -1;

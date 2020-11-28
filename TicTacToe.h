@@ -16,7 +16,7 @@ public:
     bool nextAIMove(bool firstAi);
     int hasWon();
     void resetField();
-    static bool isNumber(char input);
+    static bool strIsNumber(const std::string &str);
 
     bool isGameRunning() const {return m_gameIsRunning;}
     void setGameStatus(bool status);
@@ -30,6 +30,7 @@ private:
     bool isFull() const;
     void deletePosition(int x, int y);
     int minimax(int depth, bool isMax);
+    static bool isNumber(char input);
 
     std::map<char, int> m_scores = {{'X', 1}, {'O', 3}};
 
