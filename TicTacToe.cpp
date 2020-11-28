@@ -62,7 +62,7 @@ bool TicTacToe::isNumber(char input) {
 
 bool TicTacToe::strIsNumber(const std::string &str) {
     for(auto it = str.begin(); it != str.end(); ++it) {
-        if(!isNumber(*it))
+        if(!std::isdigit(*it))
             return false;
     }
 
